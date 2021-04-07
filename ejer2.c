@@ -4,21 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #define PI 3.14159265358979323846
-/*
-    Probar con -> N={512,  1024,  2048,  4096}
 
-    𝐶= 𝑇 + 𝑎𝑣𝑔𝑅(𝑅𝐴+𝑅𝐵)
-
-    A, B, C, T y R son matrices cuadradas de NxN.
-    avgR es el valor promedio de los elementos de la matriz R
-
-    El elemento (i,j)de la matriz R debe calcularse como:
-        𝑅𝑖,𝑗=(1−𝑇𝑖,𝑗)(1−𝑐𝑜𝑠𝜃𝑖,𝑗)+𝑇𝑖,𝑗𝑠𝑖𝑛𝜃𝑖,𝑗
-
-        Ti,jes el elemento en la posición (i,j)de la matriz T.
-        El angulo θi,j, en radianes, se obtiene de la posición (i,j) de una matriz M de NxN.
-        Los valores de los elementos de la matriz Mestán comprendidos en un rango entre 0 y 2π.
-*/
 
 
 //Para calcular tiempo
@@ -40,6 +26,7 @@ double randFP(double min, double max) {
 int main(int argc, char* argv[]){
     time_t t;
     double *A,*B,*C,*T,*R,*M;
+    double timetick, timeend;
     int N;
 
     srand((unsigned) time(&t));
@@ -60,7 +47,7 @@ int main(int argc, char* argv[]){
     R=(double*)malloc(N*N*sizeof(double));
 
     //Inicializar las matrices
-    if(1 == 1) {
+    if(argc > 2) {
         char input[256];
 
         for (int indice = 0; indice < N * N; indice++) {
@@ -99,15 +86,18 @@ int main(int argc, char* argv[]){
     }
 
     // DEBUG
-    printf("INCIALIZADO\n");
-    for (int fila = 0; fila < N; fila++) {
-        for (int columna = 0; columna < N; columna++) {
-            printf("A FILA %d, Columna %d = %f\n", fila + 1, columna + 1, A[fila*N+columna]);
-            // printf("B FILA %d, Columna %d = %f\n", fila + 1, columna + 1, B[fila*N+columna]);
-            // printf("T FILA %d, Columna %d = %f\n", fila + 1, columna + 1, T[fila*N+columna]);
-            printf("M FILA %d, Columna %d = %lf\n", fila + 1, columna + 1, M[fila*N+columna]);
-        }
-    }
+    // printf("INCIALIZADO\n");
+    // for (int fila = 0; fila < N; fila++) {
+    //     for (int columna = 0; columna < N; columna++) {
+    //         printf("A FILA %d, Columna %d = %f\n", fila + 1, columna + 1, A[fila*N+columna]);
+    //         // printf("B FILA %d, Columna %d = %f\n", fila + 1, columna + 1, B[fila*N+columna]);
+    //         // printf("T FILA %d, Columna %d = %f\n", fila + 1, columna + 1, T[fila*N+columna]);
+    //         printf("M FILA %d, Columna %d = %lf\n", fila + 1, columna + 1, M[fila*N+columna]);
+    //     }
+    // }
+
+
+    timetick = dwalltime();
     printf("----------------------------------\n");
     // Suma A + B, almacenamos el resultado en A
     for (int fila = 0; fila < N; fila++) {
@@ -128,15 +118,15 @@ int main(int argc, char* argv[]){
     // Calculo de R
     for (int fila = 0; fila < N; fila++) {
         for (int columna = 0; columna < N; columna++) {
-            printf("Con T: %f\n", T[fila*N+columna]);
-            printf("Con M: %f\n",  M[fila*N+columna]);
-            printf("Datos: COS M -> %f \n  SIN M -> %f \n", cos(M[fila*N+columna]), sin(M[fila*N+columna]));
+            // printf("Con T: %f\n", T[fila*N+columna]);
+            // printf("Con M: %f\n",  M[fila*N+columna]);
+            // printf("Datos: COS M -> %f \n  SIN M -> %f \n", cos(M[fila*N+columna]), sin(M[fila*N+columna]));
 
             R[fila*N+columna] = (1 - T[fila*N+columna]) * (1 - cos(M[fila*N+columna])) +  T[fila*N+columna] * sin(M[fila*N+columna]);
-            printf("R -> %f\n", R[fila*N+columna]);
+            // printf("R -> %f\n", R[fila*N+columna]);
         }
     }
-    printf("----------------------------------\n");
+    // printf("----------------------------------\n");
     // printf("RESULTADO R\n");
     // for (int fila = 0; fila < N; fila++) {
     //     for (int columna = 0; columna < N; columna++) {
@@ -166,7 +156,7 @@ int main(int argc, char* argv[]){
         }
         for (int ind = 0; ind < N; ind++) {
             R[fila*N+ind] = RES[0*N+ind];
-            printf("RES FILA 0, Columna %d = %f\n",  + ind, RES[0*N+ind]);
+            // printf("RES FILA 0, Columna %d = %f\n",  + ind, RES[0*N+ind]);
         } // COMERTAR EN LA DOCU
     }
     // printf("----------------------------------\n");
@@ -183,12 +173,12 @@ int main(int argc, char* argv[]){
         }
     }
 
-    printf("PROMEDIO\n");
-    for (int fila = 0; fila < N; fila++) {
-        for (int columna = 0; columna < N; columna++) {
-            printf("FINAL FILA %d, Columna %d = %f\n", fila + 1, columna + 1, R[fila*N+columna]);
-        }
-    }
+    // printf("PROMEDIO\n");
+    // for (int fila = 0; fila < N; fila++) {
+    //     for (int columna = 0; columna < N; columna++) {
+    //         printf("FINAL FILA %d, Columna %d = %f\n", fila + 1, columna + 1, R[fila*N+columna]);
+    //     }
+    // }
 
     // T + 𝑎𝑣𝑔𝑅(𝑅𝐴+𝑅𝐵)
     for (int fila = 0; fila < N; fila++) {
@@ -196,18 +186,19 @@ int main(int argc, char* argv[]){
             T[fila*N+columna] = T[fila*N+columna] + R[fila*N+columna];
         }
     }
-    printf("----------------------------------\n");
-    printf("RESULTADO\n");
-    for (int fila = 0; fila < N; fila++) {
-        for (int columna = 0; columna < N; columna++) {
-            printf("FINAL FILA %d, Columna %d = %f\n", fila + 1, columna + 1, T[fila*N+columna]);
-        }
-    }
+    // printf("----------------------------------\n");
+    // printf("RESULTADO\n");
+    // for (int fila = 0; fila < N; fila++) {
+    //     for (int columna = 0; columna < N; columna++) {
+    //         printf("FINAL FILA %d, Columna %d = %f\n", fila + 1, columna + 1, T[fila*N+columna]);
+    //     }
+    // }
 
+    timeend = dwalltime();
+    printf("Tiempo en segundos %.10lf \n", (timeend - timetick));
 }
 
 /* OPTIMIZACIONES POSIBLES
-    * Hay que probar con y sin extraer la multiplicacion
     * Ordenando la suma de A + B por columnas mejora?
     * ES NECESARIO GUARDAR R?
     * Es mejor guardarse T[fila*N+columna] en una variable?
