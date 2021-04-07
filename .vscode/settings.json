@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "random": "c",
+        "string.h": "c",
+        "string": "c",
+        "math.h": "c",
+        "sstream": "c"
+    }
+}

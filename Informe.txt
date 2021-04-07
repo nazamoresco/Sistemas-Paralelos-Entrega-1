@@ -1,0 +1,6 @@
+Desarrollo del algoritmo
+* Empezamos haciendo el programa lo mas explicito y basico posible, sin tener en cuenta ninguna optimizacion posible
+* Continuamos construyendo una forma de inicializar las matrices para poder testear la correctitud del programa.
+
+
+
