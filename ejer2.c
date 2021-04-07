@@ -99,7 +99,13 @@ int main(int argc, char* argv[]){
             R[fila*N+columna] = (1 - valorT) * (1 - cos(valorM)) +  valorT * sin(valorM);
         }
     }
-
+    printf("----------------------------------\n");
+    printf("RESULTADO\n");
+    for (int fila = 0; fila < N; fila++) {
+        for (int columna = 0; columna < N; columna++) {
+            printf("FINAL FILA %d, Columna %d = %f\n", fila + 1, columna + 1, R[fila*N+columna]);
+        }
+    }
     //Promedio de R
     double suma = 0.0;
     for (int fila = 0; fila < N; fila++) {
@@ -108,8 +114,9 @@ int main(int argc, char* argv[]){
         }
     }
 
+
     double promedio = suma / (N*N);
-    double *RES=(double*)malloc(N*N*sizeof(double));
+    double *RES=(double*)malloc(N*1*sizeof(double));
     // R * (A + B) -> R * A
     for (int fila = 0; fila < N; fila++) {
         for (int columna = 0; columna < N; columna++) {
@@ -119,9 +126,9 @@ int main(int argc, char* argv[]){
             }
             RES[0*N+columna] = suma;
         }
-        // for (int ind = 0; ind < N; ind++) {
-        //     R[fila*N+ind] = RES[0*N+ind];
-        // } // COMERTAR EN LA DOCU
+        for (int ind = 0; ind < N; ind++) {
+            R[fila*N+ind] = RES[0*N+ind];
+        } // COMERTAR EN LA DOCU
     }
 
     // PROMEDIO * (RA + RB)
@@ -141,13 +148,13 @@ int main(int argc, char* argv[]){
     timeend = dwalltime();
     printf("Tiempo en segundos %.10lf \n", (timeend - timetick));
 
-    // printf("----------------------------------\n");
-    // printf("RESULTADO\n");
-    // for (int fila = 0; fila < N; fila++) {
-    //     for (int columna = 0; columna < N; columna++) {
-    //         printf("FINAL FILA %d, Columna %d = %f\n", fila + 1, columna + 1, T[fila*N+columna]);
-    //     }
-    // }
+    printf("----------------------------------\n");
+    printf("RESULTADO\n");
+    for (int fila = 0; fila < N; fila++) {
+        for (int columna = 0; columna < N; columna++) {
+            printf("FINAL FILA %d, Columna %d = %f\n", fila + 1, columna + 1, T[fila*N+columna]);
+        }
+    }
 }
 
 /* OPTIMIZACIONES POSIBLES
