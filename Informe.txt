@@ -10,5 +10,17 @@ Tiempo en segundos 0.5465590954 para 512
 Tiempo en segundos 5.0782840252 para 1024
 Tiempo en segundos 114.8600111008 para 2048
 
+# Primera optimizacion
 
+La primera optimizacion fue la de almacenar valores en variables auxiliares en vez de realizar el mismo calculo varias veces.
 
+Esto lo realizamos con el calculo del indice en el acceso a las matrices, pero no vimos mejora y hasta en ciertos casos empeoraba por lo que descatamos esta optimizacion.
+
+Tiempo en segundos 0.5131499767 para 512
+Tiempo en segundos 9.0782840252 para 1024
+
+En cambio cuando guardamos los valores de una matriz para evitar accesos innecsarios a la matrices durante el calculo de R si vimos una mejora significativa.
+
+Tiempo en segundos 0.4950668812 para 512
+Tiempo en segundos 4.0553719997 para 1024
+Tiempo en segundos 62.7206149101 para 2048
