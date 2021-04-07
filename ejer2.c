@@ -25,7 +25,7 @@ double randFP(double min, double max) {
 
 int main(int argc, char* argv[]){
     time_t t;
-    double *A,*B,*C,*T,*R,*M;
+    double *A,*B,*C,*T,*R,*M,*RESULTADO;
     double timetick, timeend;
     int N;
 
@@ -45,6 +45,7 @@ int main(int argc, char* argv[]){
     M=(double*)malloc(N*N*sizeof(double));
     T=(double*)malloc(N*N*sizeof(double));
     R=(double*)malloc(N*N*sizeof(double));
+    RESULTADO=(double*)malloc(N*N*sizeof(double));
 
     //Inicializar las matrices
     if(argc > 2) {
@@ -86,7 +87,7 @@ int main(int argc, char* argv[]){
     // Suma A + B, almacenamos el resultado en A
     for (int fila = N; fila--;) {
         for (int columna = N; columna--;) {
-            A[fila*N+columna] = A[fila*N+columna] + B[fila*N+columna];
+            RESULTADO[fila+columna*N] = A[fila*N+columna] + B[fila*N+columna];
         }
     }
 
@@ -118,19 +119,19 @@ int main(int argc, char* argv[]){
         for (int columna = N; columna--;) {
             suma = 0;
             for (int indiceFila = N; indiceFila--;) {
-                suma += R[fila*N+indiceFila] * A[indiceFila*N+columna];
+                suma += R[fila*N+indiceFila] * RESULTADO[indiceFila+columna*N];
             }
-            RES[0*N+columna] = suma;
+            RESULTADO[fila+columna*N] = suma;
         }
-        for (int ind = N; ind--; ) {
-            R[fila*N+ind] = RES[0*N+ind];
-        } // COMERTAR EN LA DOCU
+        // for (int ind = N; ind--; ) {
+        //     R[fila*N+ind] = RES[0*N+ind];
+        // } // COMERTAR EN LA DOCU
     }
 
     // PROMEDIO * (RA + RB)
     for (int fila = N; fila--; ) {
         for (int columna = N; columna--; ) {
-            R[fila*N+columna] = R[fila*N+columna] * promedio;
+            R[fila*N+columna] = RESULTADO[fila+columna*N] * promedio;
         }
     }
 

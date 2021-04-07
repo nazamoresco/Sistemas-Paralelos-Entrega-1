@@ -1,0 +1,11 @@
+6a. El float parece tener menor precision que el double. Es lo mismo en cluster y en local
+
+6b. Se disminuye el tiempo
+ El float tardo considerablemente menos el float, utiliza directamente constnates y valores en Float por lo que no es necesario el casteo y eso reduce el tiempo
+
+
+
+
+spusuario8@frontend:~$ ./quad2
+Tiempo requerido solucion Double: 38.822788
+Tiempo requerido solucion Float: 37.378780

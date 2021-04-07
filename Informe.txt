@@ -41,3 +41,32 @@ En esta aprovechamos que que en C el 0 es falso para combinar el decremento del 
 Tiempo en segundos 0.4419710636 para 512
 Tiempo en segundos 3.7746620178 para 1024
 Tiempo en segundos 52.0080058575 para 2048
+
+# V5
+Acceso por columna
+Tiempo en segundos 0.2881238461 512
+Tiempo en segundos 2.2192440033 1024
+Tiempo en segundos 18.6206161976 2048
+
+
+Optimizado
+Tiempo en segundos 0.1262190342 en 512
+Tiempo en segundos 1.0131981373 en 1024
+Tiempo en segundos 8.9814372063 en 2048
+Tiempo en segundos 71.7591030598 
+[][][]   [][][]   [][][]
+[][][] = [][][] * [][][]
+[][][]   [][][]   [][][]
+
+
+
+--------------------CLUSTER---------------------------
+-Version 5-
+Tiempo en segundos 0.9209411144 para 512
+Tiempo en segundos 7.8719360828 para 1024
+Tiempo en segundos 66.6019508839 para 1024
+Optimizado
+Tiempo en segundos 0.2335169315 para 512
+Tiempo en segundos 3.9887001514 para 1024
+Tiempo en segundos 33.6858358383 para 2048
+Tiempo en segundos 289.3322269917 para 4096
