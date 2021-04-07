@@ -71,8 +71,8 @@ int main(int argc, char* argv[]){
         }
 
     } else {
-        for (int fila = 0; fila < N; fila++) {
-            for (int columna = 0; columna < N; columna++) {
+        for (int fila = N; fila--;) {
+            for (int columna = N; columna--;) {
                 A[fila*N+columna] = randFP(0,10);
                 B[fila*N+columna] = randFP(0,10);
                 M[fila*N+columna] = randFP(0,2*PI);
@@ -84,32 +84,28 @@ int main(int argc, char* argv[]){
     timetick = dwalltime();
     printf("----------------------------------\n");
     // Suma A + B, almacenamos el resultado en A
-    for (int fila = 0; fila < N; fila++) {
-        for (int columna = 0; columna < N; columna++) {
+    for (int fila = N; fila--;) {
+        for (int columna = N; columna--;) {
             A[fila*N+columna] = A[fila*N+columna] + B[fila*N+columna];
         }
     }
 
     double valorT, valorM;
     // Calculo de R
-    for (int fila = 0; fila < N; fila++) {
-        for (int columna = 0; columna < N; columna++) {
+    for (int fila = N; fila--;) {
+        for (int columna = N; columna--;) {
             valorT =T[fila*N+columna];
             valorM =M[fila*N+columna];
             R[fila*N+columna] = (1 - valorT) * (1 - cos(valorM)) +  valorT * sin(valorM);
         }
     }
-    printf("----------------------------------\n");
-    printf("RESULTADO\n");
-    for (int fila = 0; fila < N; fila++) {
-        for (int columna = 0; columna < N; columna++) {
-            printf("FINAL FILA %d, Columna %d = %f\n", fila + 1, columna + 1, R[fila*N+columna]);
-        }
-    }
+
+
+
     //Promedio de R
     double suma = 0.0;
-    for (int fila = 0; fila < N; fila++) {
-        for (int columna = 0; columna < N; columna++) {
+    for (int fila = N; fila--;) {
+        for (int columna = N; columna--;) {
             suma += R[fila*N+columna];
         }
     }
@@ -118,29 +114,29 @@ int main(int argc, char* argv[]){
     double promedio = suma / (N*N);
     double *RES=(double*)malloc(N*1*sizeof(double));
     // R * (A + B) -> R * A
-    for (int fila = 0; fila < N; fila++) {
-        for (int columna = 0; columna < N; columna++) {
+    for (int fila = N; fila--;) {
+        for (int columna = N; columna--;) {
             suma = 0;
-            for (int indiceFila = 0; indiceFila < N; indiceFila++) {
+            for (int indiceFila = N; indiceFila--;) {
                 suma += R[fila*N+indiceFila] * A[indiceFila*N+columna];
             }
             RES[0*N+columna] = suma;
         }
-        for (int ind = 0; ind < N; ind++) {
+        for (int ind = N; ind--; ) {
             R[fila*N+ind] = RES[0*N+ind];
         } // COMERTAR EN LA DOCU
     }
 
     // PROMEDIO * (RA + RB)
-    for (int fila = 0; fila < N; fila++) {
-        for (int columna = 0; columna < N; columna++) {
+    for (int fila = N; fila--; ) {
+        for (int columna = N; columna--; ) {
             R[fila*N+columna] = R[fila*N+columna] * promedio;
         }
     }
 
     // T + 𝑎𝑣𝑔𝑅(𝑅𝐴+𝑅𝐵)
-    for (int fila = 0; fila < N; fila++) {
-        for (int columna = 0; columna < N; columna++) {
+    for (int fila = N; fila--;) {
+        for (int columna = N; columna--;) {
             T[fila*N+columna] = T[fila*N+columna] + R[fila*N+columna];
         }
     }
@@ -148,16 +144,11 @@ int main(int argc, char* argv[]){
     timeend = dwalltime();
     printf("Tiempo en segundos %.10lf \n", (timeend - timetick));
 
-    printf("----------------------------------\n");
-    printf("RESULTADO\n");
-    for (int fila = 0; fila < N; fila++) {
-        for (int columna = 0; columna < N; columna++) {
-            printf("FINAL FILA %d, Columna %d = %f\n", fila + 1, columna + 1, T[fila*N+columna]);
-        }
-    }
+    // printf("----------------------------------\n");
+    // printf("RESULTADO\n");
+    // for (int fila = 0; fila < N; fila++) {
+    //     for (int columna = 0; columna < N; columna++) {
+    //         printf("FINAL FILA %d, Columna %d = %f\n", fila + 1, columna + 1, T[fila*N+columna]);
+    //     }
+    // }
 }
-
-/* OPTIMIZACIONES POSIBLES
-    * Ordenando la suma de A + B por columnas mejora?
-    * Crear una matriz en vez de fila auxiliar es mejor?
-*/

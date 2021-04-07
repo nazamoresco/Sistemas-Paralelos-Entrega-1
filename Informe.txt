@@ -32,4 +32,12 @@ No presento mejoras, y hasta cierto desmejora.
 s
 Tiempo en segundos0.5233290195  para 512
 Tiempo en segundos 4.0354280472  para 1024
-Tiempo en segundos  66.0288639069 para 2048
+Tiempo en segundos 66.0288639069 para 2048
+
+# V4
+
+En esta aprovechamos que que en C el 0 es falso para combinar el decremento del for con la condicion asi ahorrandonos cierto procesamiento.
+
+Tiempo en segundos 0.4419710636 para 512
+Tiempo en segundos 3.7746620178 para 1024
+Tiempo en segundos 52.0080058575 para 2048
