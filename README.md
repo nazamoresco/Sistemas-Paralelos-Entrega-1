@@ -1,4 +1,91 @@
-## Ejercicio Numero 2
+# Ejercicio Numero 1
+
+a. El algoritmo quadratic1.c computa las raíces de esta ecuación empleando los tipos de datos float y double. Compile y ejecute el código. ¿Qué diferencia nota en el resultado?
+
+La diferencia se encuentra en la precision del resultado, el double es un tipo de dato con mayor bits de precision que el float.
+
+b. El algoritmo quadratic2.c computa las raíces de esta ecuación, pero en forma repetida. Compile y ejecute el código variando la constante TIMES. ¿Qué diferencia nota en la ejecución?
+
+```
+QUAD2 TIMES 50
+ CLUSTER
+   SIN OPTIMIZAR
+     Tiempo requerido solucion Double: 19.441738
+     Tiempo requerido solucion Float: 18.744871
+   OPTIMIZADO
+     Tiempo requerido solucion Double: 2.693236
+     Tiempo requerido solucion Float: 2.421828
+
+ LOCAL
+   SIN OPTIMIZAR
+     Tiempo requerido solucion Double: 12.147080
+     Tiempo requerido solucion Float: 13.480428
+   OPTIMIZADO
+     Tiempo requerido solucion Double: 0.708603
+     Tiempo requerido solucion Float: 0.627858
+
+QUAD2 TIMES 100
+ CLUSTER
+   SIN OPTIMIZAR
+     Tiempo requerido solucion Double: 39.253563
+     Tiempo requerido solucion Float: 37.839327
+   OPTIMIZADO
+     Tiempo requerido solucion Double: 6.817833
+     Tiempo requerido solucion Float: 4.702941
+ LOCAL
+   SIN OPTIMIZAR
+     Tiempo requerido solucion Double: 23.427781
+     Tiempo requerido solucion Float: 26.285536
+   OPTIMIZADO
+     Tiempo requerido solucion Double: 1.416524
+     Tiempo requerido solucion Float: 1.187522
+
+```
+
+La mayor diferencia que se encuentra es que en el CLUSTER tarda mas el double que el float pero en Local pasa lo contrario.
+Esto se debe a que ciertas arquitecturas de hardware benefician mas a float y otras benefician mas a los double.
+
+c. El algoritmo quadratic3.c computa las raíces de esta ecuación, pero en forma repetida. Compile y ejecute el código variando la constante TIMES.
+¿Qué diferencia nota en la ejecución? ¿Qué diferencias puede observar en el código con respecto a quadratic2.c?
+
+```
+QUAD3 TIMES 50
+ CLUSTER
+   SIN OPTIMIZAR
+     Tiempo requerido solucion Double: 19.441738
+     Tiempo requerido solucion Float: 18.744871
+   OPTIMIZADO
+     Tiempo requerido solucion Double: 3.149339
+     Tiempo requerido solucion Float: 1.870756
+ LOCAL
+   SIN OPTIMIZAR
+     Tiempo requerido solucion Double: 12.090996
+     Tiempo requerido solucion Float: 8.014069
+ OPTIMIZADO
+     Tiempo requerido solucion Double: 0.661828
+     Tiempo requerido solucion Float: 0.409379
+
+QUAD3 TIMES 100
+ CLUSTER
+   SIN OPTIMIZAR
+     Tiempo requerido solucion Double: 38.889745
+     Tiempo requerido solucion Float: 55.777811
+   OPTIMIZADO
+     Tiempo requerido solucion Double: 4.657589
+     Tiempo requerido solucion Float: 3.162098
+ LOCAL
+   SIN OPTIMIZAR
+     Tiempo requerido solucion Double: 23.522227
+     Tiempo requerido solucion Float: 15.528005
+   OPTIMIZADO
+     Tiempo requerido solucion Double: 1.303832
+     Tiempo requerido solucion Float: 0.787573
+```
+
+Tarda menos respecto al punto B.
+En este caso se nota una tendencia a que las resoluciones con float tarden menos, esto se debe a que se utilizan constantes en Float en vez de “castearlas” a Float desde Double y en que se utilizan funciones especificas del tipo Float como powf() y sqrtf()
+
+# Ejercicio Numero 2
 
 Empezaremos lo mas explicito y simple posible sin esforzarnos demasiado en encontrar ninguna optimizacion, de esta forma podriamos documentar las optimizaciones y sus cambios en el tiempo de ejecucion.
 
