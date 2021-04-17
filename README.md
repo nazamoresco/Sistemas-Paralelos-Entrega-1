@@ -222,5 +222,26 @@ Resultados del algoritmo V6 con O3 en CLUSTER:
 #### Optimizacion V7 - Reemplazar For negativo por positivo
 
 Previamente segun nuestros tests la utilizacion del For negativo era superior al For positivo.
-Al parecer existe un concepto de Loop Unrolling que toma provecho de los for positivos.
-Esta funcion se presenta en compiladores que optimizan por eso realizaremos de ahora en adelante nuestras pruebas con las optimizaciones activadas.
+El Loop Unrolling toma provecho de los for positivos pero unicamente poseen esta tecnica los compiladores que optimizan ya que realiza un trade off de espacio por valocidad.
+Al presentarse unicamente en compilares que optimizan de ahora en adelante nuestras pruebas con las optimizaciones activadas para asi no perdernos posibles mejoras unicamente disponibles con optimizaciones del compilador.
+
+Hubo mejora en local aunque baja,
+
+```
+Resultados del algoritmo V6 con O3 en PC:
+  Tiempo en segundos 0.1217939854 512 (-0.003s)
+  Tiempo en segundos 0.9604120255 1024 (-0.02s)
+  Tiempo en segundos 8.5703060627 2048 (-0.2s)
+```
+
+```
+Resultados del algoritmo V6 con O3 en CLUSTER:
+  Tiempo en segundos 0.2272150517 512 (-0.01s)
+  Tiempo en segundos 3.0225861073 1024 (-0.2s)
+  Tiempo en segundos 25.9561238289 2048 (-1s)
+  Tiempo en segundos 289.3322269917 para 4096
+
+```
+
+
+#### Optimizacion 8

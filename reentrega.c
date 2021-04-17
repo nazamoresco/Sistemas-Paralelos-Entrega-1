@@ -74,8 +74,8 @@ int main(int argc, char* argv[]){
         }
 
     } else {
-        for (fila = N; fila--;) {
-            for (columna = N; columna--;) {
+        for (fila = 0; fila<N; fila++) {
+            for (columna = 0; columna<N; columna++) {
                 A[fila+columna*N] = randFP(0,10);
                 B[fila+columna*N] = randFP(0,10);
                 M[fila*N+columna] = randFP(0,2*PI);
@@ -85,9 +85,9 @@ int main(int argc, char* argv[]){
     }
 
     timetick = dwalltime();
-    // Suma A + B, almacenamos el resultado en A
-    for (fila = N; fila--;) {
-        for (columna = N; columna--;) {
+    // Suma A + fila<N;B, almacenmos el resultado en A
+    for (fila = 0; fila<N;fila++) {
+        for (columna = 0; columna<N ;columna++) {
             auxColumna = columna*N;
             RESULTADO[fila+auxColumna] = A[fila+auxColumna] + B[fila+auxColumna];
         }
@@ -95,9 +95,9 @@ int main(int argc, char* argv[]){
 
 
     // Calculo de R
-    for (fila = N; fila--;) {
+    for (fila = 0; fila<N; fila++) {
         auxFila = fila*N;
-        for (columna = N; columna--;) {
+        for (columna = 0; columna<N; columna++) {
             valorT =T[auxFila+columna];
             valorM =M[auxFila+columna];
             R[auxFila+columna] = (1 - valorT) * (1 - cos(valorM)) +  valorT * sin(valorM);
@@ -108,9 +108,9 @@ int main(int argc, char* argv[]){
 
     //Promedio de R
 
-    for (fila = N; fila--;) {
+    for (fila = 0; fila<N; fila++) {
         auxFila = fila*N;
-        for (columna = N; columna--;) {
+        for (columna = 0; columna<N; columna++) {
             suma += R[auxFila+columna];
         }
     }
@@ -119,12 +119,12 @@ int main(int argc, char* argv[]){
     promedio = suma / (N*N);
 
     // R * (A + B) -> R * A
-    for (fila = N; fila--;) {
+    for (fila = 0; fila<N; fila++) {
         auxFila = fila*N;
-        for (columna = N; columna--;) {
+        for (columna = 0; columna<N; columna++) {
             suma = 0;
             auxColumna = columna*N;
-            for (indiceFila = N; indiceFila--;) {
+            for (indiceFila = 0; indiceFila<N; indiceFila++) {
                 suma += R[auxFila+indiceFila] * RESULTADO[indiceFila+auxColumna];
             }
             RESULTADO[fila+auxColumna] = suma;
@@ -132,17 +132,17 @@ int main(int argc, char* argv[]){
     }
 
     // PROMEDIO * (RA + RB)
-    for (fila = N; fila--; ) {
+    for (fila = 0; fila<N; fila++ ) {
         auxFila = fila*N;
-        for (columna = N; columna--; ) {
+        for (columna = 0; columna<N; columna++) {
             R[auxFila+columna] = RESULTADO[fila+columna*N] * promedio;
         }
     }
 
     // T + 𝑎𝑣𝑔𝑅(𝑅𝐴+𝑅𝐵)
-    for (fila = N; fila--;) {
+    for (fila = 0; fila<N; fila++) {
         auxFila = fila*N;
-        for (columna = N; columna--;) {
+        for (columna = 0; columna<N; columna++) {
             T[auxFila+columna] = T[auxFila+columna] + R[auxFila+columna];
         }
     }
