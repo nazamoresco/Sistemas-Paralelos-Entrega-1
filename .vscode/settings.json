@@ -4,6 +4,7 @@
         "string.h": "c",
         "string": "c",
         "math.h": "c",
-        "sstream": "c"
+        "sstream": "c",
+        "stdlib.h": "c"
     }
 }

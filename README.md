@@ -1,3 +1,9 @@
+# Especificaciones de la PC hogareña utilizada
+
+* Procesador: Intel Core i7-10700 2.90 GHz
+* Ram: 16,0 GB
+* Sistema Operativo: Ubuntu 20.04 nativo
+
 # Ejercicio Numero 1
 
 a. El algoritmo quadratic1.c computa las raíces de esta ecuación empleando los tipos de datos float y double. Compile y ejecute el código. ¿Qué diferencia nota en el resultado?
@@ -91,9 +97,6 @@ Empezaremos lo mas explicito y simple posible sin esforzarnos demasiado en encon
 
 Como excepcion a esto, comenzamos con una extraccion de una multiplicacion `(RA + RB) -> R(A + B)`,  sencillamente porque nos resulto mas sencillo contruirlo directamente de esta forma.
 
-A continuacion los specs de la PC hogareña:
-* Procesador: Intel Core i7-10700 2.90 GHz
-* Ram: 16,0 GB
 
 Escribimos un pequeño test bash para asegurar la correctitud del programa a medida que vamos agregando optimizaciones.
 
@@ -185,3 +188,18 @@ Resultados del algoritmo V5 optimizado con O3 en CLUSTER:
   Tiempo en segundos 33.6858358383 para 2048
   Tiempo en segundos 289.3322269917 para 4096
 ```
+
+# Reentrega
+
+* Especificamos el Sistema Operativo.
+* Removimos el printf en la parte cronometrada.
+* Accedimos a A y B por columna.
+* Subimos la declaracion de las variables a la parte superior del codigo.
+
+
+### Mejoras de la reentrega
+
+#### Optimizacion V6 - Usar variables para ahorrar calculo de indices
+
+Esta optimizacion no nos dios una mejora en la primer entrega pero probaremos si hay una mejora en las nuevas circustancias o en el cluster.
+

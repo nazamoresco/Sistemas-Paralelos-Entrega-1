@@ -1,0 +1,18 @@
+sacar capturas para mostrar las mejores
+
+Por que A y B por columna?
+Tendria sentido si R * A y R * B porque mas eficiente pero si hacemos R * RES donde RES = (A + B) no tiene sentido
+
+
+* optimizaciones
+
+usar variables para guardar los indices y esi
+Probar en el clueter indice.
+
+Probar en el cluster for indice negativo.
+
+probar hacer lo del promedio y la suma al mismo tiempo
+
+importar el algoritmo por bloques
+
+Por bloque multiplicacion
