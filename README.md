@@ -195,11 +195,32 @@ Resultados del algoritmo V5 optimizado con O3 en CLUSTER:
 * Removimos el printf en la parte cronometrada.
 * Accedimos a A y B por columna.
 * Subimos la declaracion de las variables a la parte superior del codigo.
-
+* Liberamos la memoria de las matrices
 
 ### Mejoras de la reentrega
 
 #### Optimizacion V6 - Usar variables para ahorrar calculo de indices
 
-Esta optimizacion no nos dios una mejora en la primer entrega pero probaremos si hay una mejora en las nuevas circustancias o en el cluster.
+En la primer entrega no vimos mejoras con esta optimizacion, pero probamos nuevamente bajo estas nuevas circustancias y en el cluster.
+En local la mejora es insignificante pero en el cluster es considerable.
+Eso nos muestra la importancia de testear las distintas optimizaciones en el cluster.
 
+```
+Resultados del algoritmo V6 con O3 en PC:
+  Tiempo en segundos 0.1241769791  512 (-0.002s)
+  Tiempo en segundos 0.9895720482  1024 (-0.03s)
+  Tiempo en segundos 8.7864239216 2048 (-0.1s)
+```
+
+```
+Resultados del algoritmo V6 con O3 en CLUSTER:
+  Tiempo en segundos 0.2390909195 para 512 (-0.06s)
+  Tiempo en segundos 3.2064399719 para 1024 (-0.7s)
+  Tiempo en segundos 26.1121909618 para 2048 (-6s)
+```
+
+#### Optimizacion V7 - Reemplazar For negativo por positivo
+
+Previamente segun nuestros tests la utilizacion del For negativo era superior al For positivo.
+Al parecer existe un concepto de Loop Unrolling que toma provecho de los for positivos.
+Esta funcion se presenta en compiladores que optimizan por eso realizaremos de ahora en adelante nuestras pruebas con las optimizaciones activadas.
