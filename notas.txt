@@ -4,9 +4,10 @@ Por que A y B por columna?
 Tendria sentido si R * A y R * B porque mas eficiente pero si hacemos R * RES donde RES = (A + B) no tiene sentido
 
 
-* optimizaciones
-probar hacer lo del promedio y la suma al mismo tiempo
+CONSULTAS:
 
-importar el algoritmo por bloques
+A y B por columna si utilizamos el metodo de bloques?
+Deberimaos modificar el codigo?
 
-Por bloque multiplicacion
+
+CONSULTAR COMO SABER EL TAMAÑO DEL BLOQUE

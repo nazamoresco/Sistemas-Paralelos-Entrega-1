@@ -4,7 +4,40 @@
 #include <stdio.h>
 #include <string.h>
 #define PI 3.14159265358979323846
+#define BLOCK_SIZE 4
 
+/* Multiply square matrices, blocked version */
+void matmulblks(double *a, double *b, double *c, int n, int bs)
+{
+  int i, j, k;    /* Guess what... */
+
+  for (i = 0; i < n; i += bs)
+  {
+    for (j = 0; j < n; j += bs)
+    {
+      for  (k = 0; k < n; k += bs)
+      {
+        blkmul(&a[i*n + k], &b[j*n + k], &c[i*n + j], n, bs);
+      }
+    }
+  }
+}
+
+void blkmul(double *ablk, double *bblk, double *cblk, int n, int bs)
+{
+  int i, j, k;    /* Guess what... again... */
+
+  for (i = 0; i < bs; i++)
+  {
+    for (j = 0; j < bs; j++)
+    {
+      for  (k = 0; k < bs; k++)
+      {
+        cblk[i*n + j] += ablk[i*n + k] * bblk[j*n + k];
+      }
+    }
+  }
+}
 
 
 //Para calcular tiempo
@@ -13,7 +46,7 @@ double dwalltime(){
         struct timeval tv;
 
         gettimeofday(&tv,NULL);
-        sec = tv.tv_sec + tv.tv_usec/1000000.0;
+        sec = tv.tv_sec + tv.tv_usec/1000000.0;0.5974380970;
         return sec;
 }
 
@@ -25,7 +58,7 @@ double randFP(double min, double max) {
 
 int main(int argc, char* argv[]){
     time_t t;
-    double *A,*B,*C,*T,*R,*M,*RESULTADO, *RES;
+    double *A,*B,*C,*T,*R,*M,*RESULTADO, *BLOQUE;
     double timetick, timeend, valorT, valorM, promedio;
     double suma = 0.0;
     int N, fila, columna, indice, indiceFila, auxFila, auxColumna;
@@ -47,7 +80,7 @@ int main(int argc, char* argv[]){
     T=(double*)malloc(N*N*sizeof(double));
     R=(double*)malloc(N*N*sizeof(double));
     RESULTADO=(double*)malloc(N*N*sizeof(double));
-    RES=(double*)malloc(N*1*sizeof(double));
+    BLOQUE=(double*)malloc(N*N*sizeof(double));
 
     //Inicializar las matrices
     if(argc > 2) {
@@ -76,10 +109,11 @@ int main(int argc, char* argv[]){
     } else {
         for (fila = 0; fila<N; fila++) {
             for (columna = 0; columna<N; columna++) {
-                A[fila+columna*N] = randFP(0,10);
-                B[fila+columna*N] = randFP(0,10);
+                A[fila*N+columna] = randFP(0,10);
+                B[fila*N+columna] = randFP(0,10);
                 M[fila*N+columna] = randFP(0,2*PI);
                 T[fila*N+columna] = randFP(0,10);
+                BLOQUE[fila+columna*N] = 0;
             }
         }
     }
@@ -87,9 +121,9 @@ int main(int argc, char* argv[]){
     timetick = dwalltime();
     // Suma A + fila<N;B, almacenmos el resultado en A
     for (fila = 0; fila<N;fila++) {
+        auxFila = fila*N;
         for (columna = 0; columna<N ;columna++) {
-            auxColumna = columna*N;
-            RESULTADO[fila+auxColumna] = A[fila+auxColumna] + B[fila+auxColumna];
+            RESULTADO[auxFila+columna] = A[auxFila+columna] + B[auxFila+columna];
         }
     }
 
@@ -101,16 +135,6 @@ int main(int argc, char* argv[]){
             valorT =T[auxFila+columna];
             valorM =M[auxFila+columna];
             R[auxFila+columna] = (1 - valorT) * (1 - cos(valorM)) +  valorT * sin(valorM);
-        }
-    }
-
-
-
-    //Promedio de R
-
-    for (fila = 0; fila<N; fila++) {
-        auxFila = fila*N;
-        for (columna = 0; columna<N; columna++) {
             suma += R[auxFila+columna];
         }
     }
@@ -119,23 +143,25 @@ int main(int argc, char* argv[]){
     promedio = suma / (N*N);
 
     // R * (A + B) -> R * A
-    for (fila = 0; fila<N; fila++) {
-        auxFila = fila*N;
-        for (columna = 0; columna<N; columna++) {
-            suma = 0;
-            auxColumna = columna*N;
-            for (indiceFila = 0; indiceFila<N; indiceFila++) {
-                suma += R[auxFila+indiceFila] * RESULTADO[indiceFila+auxColumna];
-            }
-            RESULTADO[fila+auxColumna] = suma;
-        }
-    }
+    // for (fila = 0; fila<N; fila++) {
+    //     auxFila = fila*N;
+    //     for (columna = 0; columna<N; columna++) {
+    //         suma = 0;
+    //         auxColumna = columna*N;
+    //         for (indiceFila = 0; indiceFila<N; indiceFila++) {
+    //             suma += R[auxFila+indiceFila] * RESULTADO[indiceFila+auxColumna];
+    //         }
+    //         RESULTADO[fila+auxColumna] = suma;
+    //     }
+    // }
+   matmulblks(R, RESULTADO, BLOQUE, N, BLOCK_SIZE);
+
 
     // PROMEDIO * (RA + RB)
     for (fila = 0; fila<N; fila++ ) {
         auxFila = fila*N;
         for (columna = 0; columna<N; columna++) {
-            R[auxFila+columna] = RESULTADO[fila+columna*N] * promedio;
+            R[auxFila+columna] = BLOQUE[auxFila+columna] * promedio;
         }
     }
 
@@ -157,13 +183,14 @@ int main(int argc, char* argv[]){
     //         printf("FINAL FILA %d, Columna %d = %f\n", fila + 1, columna + 1, T[fila*N+columna]);
     //     }
     // }
+
     free(A);
 	free(B);
 	free(C);
 	free(T);
 	free(R);
 	free(M);
-	free(RES);
+	free(BLOQUE);
 	free(RESULTADO);
     return(0);
 }

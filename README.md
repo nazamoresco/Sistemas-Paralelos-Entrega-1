@@ -222,26 +222,72 @@ Resultados del algoritmo V6 con O3 en CLUSTER:
 #### Optimizacion V7 - Reemplazar For negativo por positivo
 
 Previamente segun nuestros tests la utilizacion del For negativo era superior al For positivo.
-El Loop Unrolling toma provecho de los for positivos pero unicamente poseen esta tecnica los compiladores que optimizan ya que realiza un trade off de espacio por valocidad.
-Al presentarse unicamente en compilares que optimizan de ahora en adelante nuestras pruebas con las optimizaciones activadas para asi no perdernos posibles mejoras unicamente disponibles con optimizaciones del compilador.
+El Loop Unrolling toma provecho de los for positivos pero unicamente poseen esta tecnica los compiladores que optimizan ya que realiza un trade off de espacio por velocidad.
+Al presentarse unicamente en compiladores que optimizan de ahora en adelante nuestras pruebas serán con las optimizaciones activadas para asi no perdernos posibles mejoras unicamente disponibles con optimizaciones del compilador.
 
-Hubo mejora en local aunque baja,
+Hubo mejora en local aunque baja, en el cluster con los numeros mas grande se vio una gran mejora.
 
 ```
-Resultados del algoritmo V6 con O3 en PC:
+Resultados del algoritmo V7 con O3 en PC:
   Tiempo en segundos 0.1217939854 512 (-0.003s)
   Tiempo en segundos 0.9604120255 1024 (-0.02s)
   Tiempo en segundos 8.5703060627 2048 (-0.2s)
 ```
 
 ```
-Resultados del algoritmo V6 con O3 en CLUSTER:
+Resultados del algoritmo V7 con O3 en CLUSTER:
   Tiempo en segundos 0.2272150517 512 (-0.01s)
   Tiempo en segundos 3.0225861073 1024 (-0.2s)
   Tiempo en segundos 25.9561238289 2048 (-1s)
-  Tiempo en segundos 289.3322269917 para 4096
-
+  Tiempo en segundos 246.7201778889 4096 (-43s)
 ```
 
 
-#### Optimizacion 8
+#### Optimizacion V8 - Union del calculo de R y su promedio
+
+En vez de calcular R y luego recorrer R para calcular el promedio de sus elementos, vamos a ir promediando a medida que calculamos R.
+Que mejore es logico ya que nos ahorramos todo un recorrido a la matriz R.
+
+Hemos notado que en N de bajo tamaño los cambio de performance pueden llegar a ser aleatorio por eso a partir de esta optimizacion incluiremos la medida de N 4096 para PC hogareña
+
+```
+Resultados del algoritmo V8 con O3 en PC:
+  Tiempo en segundos 0.1222889423 512 (-0.001s)
+  Tiempo en segundos 0.9899148941 1024 (-0.02s)
+  Tiempo en segundos 8.6328001022 2048 (-0.1s)
+  Tiempo en segundos 68.7034969330 4096
+```
+
+```
+Resultados del algoritmo V8 con O3 en CLUSTER:
+  Tiempo en segundos 0.2291181087 512 (+0.002s)
+  Tiempo en segundos 2.5515639782 1024 (-0.5s)
+  Tiempo en segundos 27.6058239937 2048 (+1s)
+  Tiempo en segundos 177.7153198719 4096 (-69s)
+```
+
+#### Optimizacion V9 - Utilizacion del algoritmo multiplicacion por bloque
+
+Este es un algoritmo mas eficiente para el calculo de matrices, pero debimos regresar a un acceso por fila tanto en A y en B ya que dicho algoritmo accedia de esta forma a la segunda matriz.
+
+Con bloque N = 4
+
+```
+Resultados del algoritmo V9 con O3 en PC:
+  Tiempo en segundos 0.0859701633 512 (-0.1s)
+  Tiempo en segundos 0.5836751461 1024 (-0.4s)
+  Tiempo en segundos 4.6768608093 2048 (-4s)
+  Tiempo en segundos 36.9683799744 4096 (-32s)
+```
+
+```
+Resultados del algoritmo V9 con O3 en CLUSTER:
+  Tiempo en segundos 0.2291181087 512 (+0.002s)
+  Tiempo en segundos 2.5515639782 1024 (-0.5s)
+  Tiempo en segundos 27.6058239937 2048 (+1s)
+  Tiempo en segundos 177.7153198719 4096 (-34s)
+```
+
+
+
+
