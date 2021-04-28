@@ -268,26 +268,100 @@ Resultados del algoritmo V8 con O3 en CLUSTER:
 
 #### Optimizacion V9 - Utilizacion del algoritmo multiplicacion por bloque
 
-Este es un algoritmo mas eficiente para el calculo de matrices, pero debimos regresar a un acceso por fila tanto en A y en B ya que dicho algoritmo accedia de esta forma a la segunda matriz.
+Este es un algoritmo mas eficiente para el calculo de matrices.
 
-Con bloque N = 4
-
-```
-Resultados del algoritmo V9 con O3 en PC:
-  Tiempo en segundos 0.0859701633 512 (-0.1s)
-  Tiempo en segundos 0.5836751461 1024 (-0.4s)
-  Tiempo en segundos 4.6768608093 2048 (-4s)
-  Tiempo en segundos 36.9683799744 4096 (-32s)
-```
-
-```
-Resultados del algoritmo V9 con O3 en CLUSTER:
-  Tiempo en segundos 0.2291181087 512 (+0.002s)
-  Tiempo en segundos 2.5515639782 1024 (-0.5s)
-  Tiempo en segundos 27.6058239937 2048 (+1s)
-  Tiempo en segundos 177.7153198719 4096 (-34s)
-```
+A y B por columna
 
 
 
+LOCAL CON O3
+con N 512, 1024, 2048, 4096
+BLOCK SIZE = 64
+N=512
+Tiempo en segundos 0.1228930950
+N=1024
+Tiempo en segundos 0.9109921455
+N=2048
+Tiempo en segundos 7.4957959652
+N=4096
+Tiempo en segundos 62.3854839802
 
+BLOCK SIZE = 32
+N =512
+Tiempo en segundos 0.1025271416
+N = 1024
+Tiempo en segundos 0.7395899296
+N = 2048
+Tiempo en segundos 6.3410418034
+N = 4096
+Tiempo en segundos 55.8242478371
+
+BLOCK SIZE = 16
+N =512
+Tiempo en segundos 0.0834891796
+N = 1024
+Tiempo en segundos 0.6646518707
+N = 2048
+Tiempo en segundos 5.3521339893
+N = 4096
+Tiempo en segundos 57.6838190556
+
+BLOCK SIZE = 8
+N = 512
+Tiempo en segundos 0.1095681190
+N = 1024
+Tiempo en segundos 0.8257339001
+N = 2048
+Tiempo en segundos 6.7357931137
+N = 4096
+Tiempo en segundos 54.0443139076
+
+BLOCK_SIZE = 4
+N=512
+Tiempo en segundos 0.0889801979
+N = 1024
+Tiempo en segundos 0.5906310081
+N = 2048
+Tiempo en segundos 4.6603698730
+N = 4096
+Tiempo en segundos 37.2843301296
+
+BLOCK_SIZE = 2
+N=512
+Tiempo en segundos 0.1124119759 
+N = 1024
+Tiempo en segundos 0.8261470795 
+N = 2048
+Tiempo en segundos 6.8966259956 
+N = 4096
+Tiempo en segundos 53.8338119984 
+
+CLUSTER CON O3
+64
+32
+16
+8
+
+
+
+
+
+
+CLUSTER:
+BLOQUE 2:
+[0.40,3.34,26.52,211.66]
+
+BLOQUE 4:
+[0.29,2.30,18.34,144.32]
+
+BLOQUE 8:
+[0.28,2.19,17.42,136.98]
+
+BLOQUE 16:
+[0.26,2.13,16.99,175.40]
+
+BLOQUE 32:
+[0.25,2.07,20.20,152.64]
+
+Bloque 64:
+[0.26,2.31,18.86,147.40]

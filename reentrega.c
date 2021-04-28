@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #define PI 3.14159265358979323846
-#define BLOCK_SIZE 4
+#define BLOCK_SIZE 2
 
 /* Multiply square matrices, blocked version */
 void matmulblks(double *a, double *b, double *c, int n, int bs)
@@ -109,8 +109,8 @@ int main(int argc, char* argv[]){
     } else {
         for (fila = 0; fila<N; fila++) {
             for (columna = 0; columna<N; columna++) {
-                A[fila*N+columna] = randFP(0,10);
-                B[fila*N+columna] = randFP(0,10);
+                A[fila+columna*N] = randFP(0,10);
+                B[fila+columna*N] = randFP(0,10);
                 M[fila*N+columna] = randFP(0,2*PI);
                 T[fila*N+columna] = randFP(0,10);
                 BLOQUE[fila+columna*N] = 0;
@@ -120,10 +120,10 @@ int main(int argc, char* argv[]){
 
     timetick = dwalltime();
     // Suma A + fila<N;B, almacenmos el resultado en A
-    for (fila = 0; fila<N;fila++) {
-        auxFila = fila*N;
-        for (columna = 0; columna<N ;columna++) {
-            RESULTADO[auxFila+columna] = A[auxFila+columna] + B[auxFila+columna];
+    for (columna = 0; columna<N ;columna++) {
+        for (fila = 0; fila<N;fila++) {
+            auxColumna = fila+columna*N;
+            RESULTADO[auxColumna] = A[auxColumna] + B[auxColumna];
         }
     }
 
@@ -143,19 +143,7 @@ int main(int argc, char* argv[]){
     promedio = suma / (N*N);
 
     // R * (A + B) -> R * A
-    // for (fila = 0; fila<N; fila++) {
-    //     auxFila = fila*N;
-    //     for (columna = 0; columna<N; columna++) {
-    //         suma = 0;
-    //         auxColumna = columna*N;
-    //         for (indiceFila = 0; indiceFila<N; indiceFila++) {
-    //             suma += R[auxFila+indiceFila] * RESULTADO[indiceFila+auxColumna];
-    //         }
-    //         RESULTADO[fila+auxColumna] = suma;
-    //     }
-    // }
    matmulblks(R, RESULTADO, BLOQUE, N, BLOCK_SIZE);
-
 
     // PROMEDIO * (RA + RB)
     for (fila = 0; fila<N; fila++ ) {
@@ -175,14 +163,6 @@ int main(int argc, char* argv[]){
 
     timeend = dwalltime();
     printf("Tiempo en segundos %.10lf \n", (timeend - timetick));
-
-    // printf("----------------------------------\n");
-    // printf("RESULTADO\n");
-    // for (int fila = 0; fila < N; fila++) {
-    //     for (int columna = 0; columna < N; columna++) {
-    //         printf("FINAL FILA %d, Columna %d = %f\n", fila + 1, columna + 1, T[fila*N+columna]);
-    //     }
-    // }
 
     free(A);
 	free(B);

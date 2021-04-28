@@ -74,8 +74,8 @@ int main(int argc, char* argv[]){
     } else {
         for (int fila = N; fila--;) {
             for (int columna = N; columna--;) {
-                A[fila*N+columna] = randFP(0,10);
-                B[fila*N+columna] = randFP(0,10);
+                A[fila+columna*N] = randFP(0,10);
+                B[fila+columna*N] = randFP(0,10);
                 M[fila*N+columna] = randFP(0,2*PI);
                 T[fila*N+columna] = randFP(0,10);
             }
@@ -87,7 +87,7 @@ int main(int argc, char* argv[]){
     // Suma A + B, almacenamos el resultado en A
     for (int fila = N; fila--;) {
         for (int columna = N; columna--;) {
-            RESULTADO[fila+columna*N] = A[fila*N+columna] + B[fila*N+columna];
+            RESULTADO[fila+columna*N] = A[fila+columna*N] + B[fila+columna*N];
         }
     }
 
@@ -145,11 +145,11 @@ int main(int argc, char* argv[]){
     timeend = dwalltime();
     printf("Tiempo en segundos %.10lf \n", (timeend - timetick));
 
-    // printf("----------------------------------\n");
-    // printf("RESULTADO\n");
-    // for (int fila = 0; fila < N; fila++) {
-    //     for (int columna = 0; columna < N; columna++) {
-    //         printf("FINAL FILA %d, Columna %d = %f\n", fila + 1, columna + 1, T[fila*N+columna]);
-    //     }
-    // }
+    printf("----------------------------------\n");
+    printf("RESULTADO\n");
+    for (int fila = 0; fila < N; fila++) {
+        for (int columna = 0; columna < N; columna++) {
+            printf("FINAL FILA %d, Columna %d = %f\n", fila + 1, columna + 1, T[fila*N+columna]);
+        }
+    }
 }
